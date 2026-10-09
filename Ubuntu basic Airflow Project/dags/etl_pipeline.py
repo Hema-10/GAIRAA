@@ -6,10 +6,23 @@ from airflow.providers.standard.operators.python import PythonOperator
 
 
 def load_data():
-    file_path = "/home/hema/airflow/data/employees.csv"
+    import os
 
-    df = pd.read_csv(file_path)
+    input_folder = "/home/hema/airflow/data/input"
 
+    csv_files = [
+        file for file in os.listdir(input_folder)
+        if file.endswith(".csv")
+    ]
+
+    if not csv_files:
+        raise FileNotFoundError("No CSV file found in input folder")
+
+    input_file = os.path.join(input_folder, csv_files[0])
+
+    df = pd.read_csv(input_file)
+
+    print(f"Loaded file: {csv_files[0]}")
     print("Data loaded successfully!")
     print(df)
 
