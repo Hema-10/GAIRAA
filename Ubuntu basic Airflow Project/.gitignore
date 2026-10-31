@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+logs/
+airflow.db
+airflow.db-shm
+airflow.db-wal
+.env
+*.json
+
+
