@@ -1,0 +1,10 @@
+erDiagram
+    BRANCHES ||--o{ CUSTOMERS : serves
+    BRANCHES ||--o{ ACCOUNTS : manages
+    CUSTOMERS ||--o{ ACCOUNT_HOLDERS : owns
+    ACCOUNTS ||--o{ ACCOUNT_HOLDERS : held_by
+    ACCOUNTS ||--o{ BANK_TRANSACTIONS : records
+    CUSTOMERS ||--o{ LOANS : borrows
+    BRANCHES ||--o{ LOANS : issues
+    LOANS ||--o{ LOAN_PAYMENTS : receives
+    BANK_TRANSACTIONS ||--o{ FRAUD_ALERTS : triggers

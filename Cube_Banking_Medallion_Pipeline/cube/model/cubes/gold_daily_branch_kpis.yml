@@ -1,0 +1,44 @@
+cubes:
+  - name: gold_daily_branch_kpis
+    sql_table: banking_analytics.gold_daily_branch_kpis
+    data_source: default
+
+    joins:
+      - name: branches
+        sql: "{CUBE.branch_id} = {branches.branch_id}"
+        relationship: many_to_one
+
+    dimensions:
+      - name: transaction_date
+        sql: transaction_date
+        type: time
+
+      - name: branch_id
+        sql: branch_id
+        type: number
+        primary_key: true
+
+    measures:
+      - name: count
+        type: count
+
+      - name: failed_count
+        sql: failed_count
+        type: sum
+
+      - name: successful_count
+        sql: successful_count
+        type: sum
+
+      - name: successful_value
+        sql: successful_value
+        type: sum
+
+      - name: transaction_count
+        sql: transaction_count
+        type: sum
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://docs.cube.dev/docs/pre-aggregations/getting-started-pre-aggregations
+

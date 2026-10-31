@@ -1,0 +1,47 @@
+services:
+  airflow:
+    image: apache/airflow:2.10.5
+    container_name: banking-airflow
+    restart: unless-stopped
+    command: standalone
+    ports:
+      - "8082:8080"
+    env_file:
+      - .env
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "False"
+      AIRFLOW__CORE__EXECUTOR: SequentialExecutor
+      PYTHONPATH: /opt/airflow/project
+      MYSQL_HOST: host.docker.internal
+      _PIP_ADDITIONAL_REQUIREMENTS: "mysql-connector-python python-dotenv"
+    volumes:
+      - airflow_home:/opt/airflow
+      - ./dags:/opt/airflow/dags
+      - ./:/opt/airflow/project
+
+  cube:
+    image: cubejs/cube:latest
+    container_name: banking-cube
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      CUBEJS_DEV_MODE: "true"
+      CUBEJS_API_SECRET: ${CUBEJS_API_SECRET:-local-dev-secret-change-me}
+      CUBEJS_DB_TYPE: mysql
+      CUBEJS_DB_HOST: host.docker.internal
+      CUBEJS_DB_PORT: ${MYSQL_PORT:-3306}
+      CUBEJS_DB_NAME: ${MYSQL_DATABASE:-banking_analytics}
+      CUBEJS_DB_USER: ${MYSQL_USER:-root}
+      CUBEJS_DB_PASS: ${MYSQL_PASSWORD}
+      CUBEJS_EXTERNAL_DEFAULT: "true"
+      CUBEJS_SCHEDULED_REFRESH_TIMER: "true"
+    ports:
+      - "4000:4000"
+      - "15432:15432"
+    volumes:
+      - ./cube:/cube/conf
+
+volumes:
+  airflow_home:

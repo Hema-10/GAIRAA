@@ -1,0 +1,45 @@
+cubes:
+  - name: ingestion_batches
+    sql_table: banking_analytics.ingestion_batches
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: batch_id
+        sql: batch_id
+        type: string
+        primary_key: true
+
+      - name: error_message
+        sql: error_message
+        type: string
+
+      - name: source_name
+        sql: source_name
+        type: string
+
+      - name: status
+        sql: status
+        type: string
+
+      - name: completed_at
+        sql: completed_at
+        type: time
+
+      - name: started_at
+        sql: started_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+      - name: row_count
+        sql: row_count
+        type: sum
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://docs.cube.dev/docs/pre-aggregations/getting-started-pre-aggregations
+

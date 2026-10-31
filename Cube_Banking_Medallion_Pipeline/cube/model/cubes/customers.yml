@@ -1,0 +1,36 @@
+cubes:
+  - name: customers
+    sql_table: banking_analytics.customers
+    data_source: default
+
+    joins:
+      - name: branches
+        sql: "{CUBE}.home_branch_id = {branches.branch_id}"
+        relationship: many_to_one
+
+    dimensions:
+      - name: customer_id
+        sql: customer_id
+        type: number
+        primary_key: true
+
+      - name: customer_segment
+        sql: customer_segment
+        type: string
+
+      - name: full_name
+        sql: full_name
+        type: string
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://docs.cube.dev/docs/pre-aggregations/getting-started-pre-aggregations
+

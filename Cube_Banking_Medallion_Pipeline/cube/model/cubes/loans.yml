@@ -1,0 +1,44 @@
+cubes:
+  - name: loans
+    sql_table: banking_analytics.loans
+    data_source: default
+
+    joins:
+      - name: branches
+        sql: "{CUBE}.branch_id = {branches.branch_id}"
+        relationship: many_to_one
+
+      - name: customers
+        sql: "{CUBE}.customer_id = {customers.customer_id}"
+        relationship: many_to_one
+
+    dimensions:
+      - name: loan_id
+        sql: loan_id
+        type: number
+        primary_key: true
+
+      - name: loan_status
+        sql: loan_status
+        type: string
+
+      - name: due_date
+        sql: due_date
+        type: time
+
+      - name: issued_date
+        sql: issued_date
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+      - name: principal_amount
+        sql: principal_amount
+        type: sum
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://docs.cube.dev/docs/pre-aggregations/getting-started-pre-aggregations
+

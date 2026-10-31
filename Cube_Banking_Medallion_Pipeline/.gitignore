@@ -1,0 +1,2 @@
+.env\n.venv/\n__pycache__/\n.pytest_cache/\n*.pyc\nlogs/\ndata/*.csv\n
+cube/.cubestore/

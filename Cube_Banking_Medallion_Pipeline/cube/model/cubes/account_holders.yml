@@ -1,0 +1,37 @@
+cubes:
+  - name: account_holders
+    sql_table: banking_analytics.account_holders
+    data_source: default
+
+    joins:
+      - name: accounts
+        sql: "{CUBE.account_id} = {accounts.account_id}"
+        relationship: many_to_one
+
+      - name: customers
+        sql: "{CUBE.customer_id} = {customers.customer_id}"
+        relationship: many_to_one
+
+    dimensions:
+      - name: customer_id
+        sql: customer_id
+        type: number
+        primary_key: true
+
+      - name: account_id
+        sql: account_id
+        type: number
+        primary_key: true
+
+      - name: holder_role
+        sql: holder_role
+        type: string
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://docs.cube.dev/docs/pre-aggregations/getting-started-pre-aggregations
+

@@ -1,0 +1,36 @@
+cubes:
+  - name: gold_monthly_loan_kpis
+    sql_table: banking_analytics.gold_monthly_loan_kpis
+    data_source: default
+
+    joins:
+      - name: branches
+        sql: "{CUBE.branch_id} = {branches.branch_id}"
+        relationship: many_to_one
+
+    dimensions:
+      - name: payment_month
+        sql: payment_month
+        type: time
+
+      - name: branch_id
+        sql: branch_id
+        type: number
+        primary_key: true
+
+    measures:
+      - name: count
+        type: count
+
+      - name: payment_count
+        sql: payment_count
+        type: sum
+
+      - name: successful_amount
+        sql: successful_amount
+        type: sum
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://docs.cube.dev/docs/pre-aggregations/getting-started-pre-aggregations
+

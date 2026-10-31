@@ -1,0 +1,29 @@
+cubes:
+  - name: branches
+    sql_table: banking_analytics.branches
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: branch_id
+        sql: branch_id
+        type: number
+        primary_key: true
+
+      - name: branch_name
+        sql: branch_name
+        type: string
+
+      - name: city
+        sql: city
+        type: string
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://docs.cube.dev/docs/pre-aggregations/getting-started-pre-aggregations
+

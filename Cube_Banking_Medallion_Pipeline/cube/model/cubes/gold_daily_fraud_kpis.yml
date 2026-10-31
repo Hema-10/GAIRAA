@@ -1,0 +1,32 @@
+cubes:
+  - name: gold_daily_fraud_kpis
+    sql_table: banking_analytics.gold_daily_fraud_kpis
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: alert_date
+        sql: alert_date
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+      - name: alert_count
+        sql: alert_count
+        type: sum
+
+      - name: high_risk_count
+        sql: high_risk_count
+        type: sum
+
+      - name: pending_count
+        sql: pending_count
+        type: sum
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://docs.cube.dev/docs/pre-aggregations/getting-started-pre-aggregations
+

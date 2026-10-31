@@ -1,0 +1,56 @@
+cubes:
+  - name: bank_transactions
+    sql_table: banking_analytics.bank_transactions
+    data_source: default
+
+    joins:
+      - name: accounts
+        sql: "{CUBE}.account_id = {accounts.account_id}"
+        relationship: many_to_one
+
+    dimensions:
+      - name: transaction_id
+        sql: transaction_id
+        type: number
+        primary_key: true
+
+      - name: channel
+        sql: channel
+        type: string
+
+      - name: currency
+        sql: currency
+        type: string
+
+      - name: merchant_category
+        sql: merchant_category
+        type: string
+
+      - name: status
+        sql: status
+        type: string
+
+      - name: transaction_type
+        sql: transaction_type
+        type: string
+
+      - name: source_updated_at
+        sql: source_updated_at
+        type: time
+
+      - name: transaction_time
+        sql: transaction_time
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+      - name: amount
+        sql: amount
+        type: sum
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://docs.cube.dev/docs/pre-aggregations/getting-started-pre-aggregations
+

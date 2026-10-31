@@ -1,0 +1,33 @@
+cubes:
+  - name: gold_daily_channel_kpis
+    sql_table: banking_analytics.gold_daily_channel_kpis
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: transaction_date
+        sql: transaction_date
+        type: time
+
+      - name: channel
+        sql: channel
+        type: string
+        primary_key: true
+
+    measures:
+      - name: count
+        type: count
+
+      - name: successful_value
+        sql: successful_value
+        type: sum
+
+      - name: transaction_count
+        sql: transaction_count
+        type: sum
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://docs.cube.dev/docs/pre-aggregations/getting-started-pre-aggregations
+

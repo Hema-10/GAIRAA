@@ -1,0 +1,36 @@
+cubes:
+  - name: fraud_alerts
+    sql_table: banking_analytics.fraud_alerts
+    data_source: default
+
+    joins:
+      - name: bank_transactions
+        sql: "{CUBE}.transaction_id = {bank_transactions.transaction_id}"
+        relationship: many_to_one
+
+    dimensions:
+      - name: alert_id
+        sql: alert_id
+        type: number
+        primary_key: true
+
+      - name: alert_reason
+        sql: alert_reason
+        type: string
+
+      - name: review_status
+        sql: review_status
+        type: string
+
+      - name: created_at
+        sql: created_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://docs.cube.dev/docs/pre-aggregations/getting-started-pre-aggregations
+

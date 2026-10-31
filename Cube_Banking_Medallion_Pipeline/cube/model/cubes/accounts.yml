@@ -1,0 +1,40 @@
+cubes:
+  - name: accounts
+    sql_table: banking_analytics.accounts
+    data_source: default
+
+    joins:
+      - name: branches
+        sql: "{CUBE}.branch_id = {branches.branch_id}"
+        relationship: many_to_one
+
+    dimensions:
+      - name: account_id
+        sql: account_id
+        type: number
+        primary_key: true
+
+      - name: account_type
+        sql: account_type
+        type: string
+
+      - name: status
+        sql: status
+        type: string
+
+      - name: opened_at
+        sql: opened_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+      - name: current_balance
+        sql: current_balance
+        type: sum
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://docs.cube.dev/docs/pre-aggregations/getting-started-pre-aggregations
+
